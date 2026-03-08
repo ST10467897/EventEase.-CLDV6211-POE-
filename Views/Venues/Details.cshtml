@@ -1,0 +1,13 @@
+@model Venue
+@{ ViewData["Title"] = Model.VenueName; }
+<h1 class="page-header"><i class="bi bi-building"></i> @Model.VenueName</h1>
+<div class="row g-4">
+<div class="col-md-5">@if (!string.IsNullOrEmpty(Model.ImageUrl)) { <img src="@Model.ImageUrl" class="img-fluid rounded shadow" alt="@Model.VenueName" /> } else { <div class="bg-secondary text-white d-flex align-items-center justify-content-center rounded" style="height:300px;"><i class="bi bi-image display-1 opacity-50"></i></div> }</div>
+<div class="col-md-7"><div class="card p-4"><dl class="row mb-0">
+<dt class="col-sm-4">Venue ID</dt><dd class="col-sm-8">#@Model.VenueId</dd>
+<dt class="col-sm-4">Location</dt><dd class="col-sm-8">@Model.Location</dd>
+<dt class="col-sm-4">Capacity</dt><dd class="col-sm-8">@Model.Capacity guests</dd>
+<dt class="col-sm-4">Events</dt><dd class="col-sm-8">@Model.Events.Count registered</dd>
+<dt class="col-sm-4">Bookings</dt><dd class="col-sm-8">@Model.Bookings.Count total</dd>
+</dl></div>
+<div class="mt-3 d-flex gap-2"><a asp-action="Edit" asp-route-id="@Model.VenueId" class="btn btn-outline-secondary"><i class="bi bi-pencil"></i> Edit</a><a asp-action="Index" class="btn btn-outline-primary"><i class="bi bi-arrow-left"></i> Back</a></div></div></div>
