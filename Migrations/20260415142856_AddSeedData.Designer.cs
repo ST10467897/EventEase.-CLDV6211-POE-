@@ -4,6 +4,7 @@ using EventEaseLocal.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventEaseLocal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260415142856_AddSeedData")]
+    partial class AddSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -282,7 +285,7 @@ namespace EventEaseLocal.Migrations
                         {
                             VenueId = 5,
                             Capacity = 80,
-                            ImageUrl = "https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=600",
+                            ImageUrl = "https://images.unsplash.com/photo-1470770841497-7b3212e54211?w=600",
                             Location = "5 Peak Drive, Drakensberg",
                             VenueName = "Mountain Lodge"
                         },
@@ -298,7 +301,7 @@ namespace EventEaseLocal.Migrations
                         {
                             VenueId = 7,
                             Capacity = 1000,
-                            ImageUrl = "https://images.unsplash.com/photo-1497366216548-37526070297c?w=600",
+                            ImageUrl = "https://images.unsplash.com/photo-1431540015159-0b624694d7da?w=600",
                             Location = "200 Commissioner Street, Johannesburg",
                             VenueName = "City Conference Centre"
                         });

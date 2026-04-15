@@ -86,6 +86,6 @@ erDiagram
 
 The database is seeded with initial data for development and testing:
 
-- **3 Venues**: Grand Ballroom (Cape Town, 500), Skyline Terrace (Johannesburg, 200), The Garden Pavilion (Durban, 150)
-- **2 Events**: Annual Gala (Grand Ballroom), Tech Conference 2026 (Skyline Terrace)
-- **1 Booking**: Annual Gala on 2026-06-15, 18:00–23:00
+- **7 Venues**: Grand Ballroom (Johannesburg, 500), Skyline Terrace (Sandton, 200), The Garden Pavilion (Pretoria, 150), Ocean View Hall (Durban, 300), Mountain Lodge (Drakensberg, 80), The Vineyard Estate (Stellenbosch, 250), City Conference Centre (Johannesburg, 1000)
+- **8 Events**: Annual Tech Conference, Wedding Reception - Mokoena, Corporate Year-End Gala, Charity Fun Run Launch, Product Launch - Nova Phone, Birthday Celebration - Naidoo, Team Building Retreat, Music Festival Day Pass
+- **8 Bookings**: One booking per event, spanning April–October 2026

@@ -12,8 +12,6 @@
 
 html {
     font-size: 14px;
-    position: relative;
-    min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -23,7 +21,10 @@ html {
 body {
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
     background-color: #f4f6f9;
-    margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }
 
 /* --- Navbar --- */
@@ -133,12 +134,17 @@ body {
 }
 .table td { vertical-align: middle; }
 
+/* --- Main Content --- */
+main {
+    flex: 1;
+}
+
 /* --- Footer --- */
 footer {
     background: var(--ee-primary);
     color: rgba(255, 255, 255, 0.6);
     padding: 1rem 0;
-    margin-top: 3rem;
+    margin-top: auto;
 }
 
 /* --- Alerts --- */
