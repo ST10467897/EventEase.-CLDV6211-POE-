@@ -1,31 +1,229 @@
+/* === EventEase Custom Styles === */
+
+:root {
+    --ee-primary: #1a1a2e;
+    --ee-accent: #e94560;
+    --ee-secondary: #16213e;
+    --ee-success: #2ecc71;
+    --ee-radius: 12px;
+    --ee-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    --ee-shadow-hover: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html { font-size: 16px; }
 }
 
 body {
-  margin-bottom: 60px;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: #f4f6f9;
+    margin-bottom: 60px;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* --- Navbar --- */
+.navbar {
+    background: linear-gradient(135deg, var(--ee-primary), var(--ee-secondary)) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+}
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: -0.3px;
+}
+.navbar-brand .bi { color: var(--ee-accent); }
+.nav-link {
+    font-weight: 500;
+    padding: 0.4rem 0.75rem !important;
+    border-radius: 6px;
+    transition: background 0.2s, color 0.2s;
+}
+.nav-link:hover { color: var(--ee-accent) !important; }
+.nav-link.active {
+    background: rgba(233, 69, 96, 0.15);
+    color: #fff !important;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* --- Buttons --- */
+.btn-accent {
+    background-color: var(--ee-accent);
+    border-color: var(--ee-accent);
+    color: #fff;
 }
+.btn-accent:hover {
+    background-color: #c73e54;
+    border-color: #c73e54;
+    color: #fff;
+}
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus,
+.form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+/* --- Cards --- */
+.card {
+    border: none;
+    border-radius: var(--ee-radius);
+    box-shadow: var(--ee-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--ee-shadow-hover);
+}
+
+/* --- Stat Cards --- */
+.stat-card {
+    border-left: 3px solid var(--ee-accent);
+    padding: 1.25rem;
+}
+.stat-card .stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+.stat-card .stat-label {
+    font-size: 0.7rem;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+.stat-card .stat-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ee-primary);
+}
+
+/* --- Page Headers --- */
+.page-header {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    color: var(--ee-primary);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: none;
+}
+.page-header::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 3px;
+    background: var(--ee-accent);
+    border-radius: 2px;
+    margin-top: 0.5rem;
+}
+
+/* --- Tables --- */
+.table th {
+    background-color: var(--ee-primary);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+}
+.table td { vertical-align: middle; }
+
+/* --- Footer --- */
+footer {
+    background: var(--ee-primary);
+    color: rgba(255, 255, 255, 0.6);
+    padding: 1rem 0;
+    margin-top: 3rem;
+}
+
+/* --- Alerts --- */
+.alert-toast {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1050;
+    min-width: 300px;
+}
+
+/* --- Forms --- */
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+}
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* --- Image Upload --- */
+.upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 2rem;
+    text-align: center;
+    background: #fafbfc;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+}
+.upload-area:hover {
+    border-color: var(--ee-accent);
+    background: #f5f5f8;
+}
+.upload-area .upload-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.upload-area .upload-text { font-size: 0.85rem; color: #666; font-weight: 500; }
+.upload-area .upload-hint { font-size: 0.75rem; color: #aaa; margin-top: 0.25rem; }
+
+/* --- Venue Cards --- */
+.venue-card .card-img-placeholder {
+    height: 200px;
+    background: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.venue-card .card-img-placeholder i { font-size: 3rem; color: #ccc; }
+
+/* --- Login Page --- */
+.login-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, var(--ee-primary) 0%, var(--ee-secondary) 50%, var(--ee-primary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.login-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+.login-card .login-brand { text-align: center; margin-bottom: 1.75rem; }
+.login-card .login-brand i { font-size: 2rem; color: var(--ee-accent); }
+.login-card .login-brand h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ee-primary);
+    letter-spacing: -0.3px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+.login-card .login-brand p { font-size: 0.85rem; color: #888; margin-bottom: 0; }
+
+/* --- User Nav --- */
+.nav-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+}
+.nav-user .nav-username { color: rgba(255, 255, 255, 0.8); }
+.nav-divider { color: rgba(255, 255, 255, 0.3); }
