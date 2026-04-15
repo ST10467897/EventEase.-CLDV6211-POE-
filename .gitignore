@@ -3,8 +3,8 @@ obj/
 *.user
 *.suo
 .claude
+!.claude/skills/
 .vs/
 .vscode/
 appsettings.Development.json
-
-
+.superpowers/
