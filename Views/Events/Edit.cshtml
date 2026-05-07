@@ -2,7 +2,7 @@
 @{ ViewData["Title"] = "Edit Event"; }
 <h1 class="page-header"><i class="bi bi-pencil"></i> Edit Event</h1>
 <div class="row"><div class="col-md-8 col-lg-6"><div class="card p-4">
-<form asp-action="Edit"><div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div><input type="hidden" asp-for="EventId" />
+<form asp-action="Edit">@if (!ViewData.ModelState.IsValid) { <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div> }<input type="hidden" asp-for="EventId" />
 <div class="mb-3"><label asp-for="EventName" class="form-label"></label><input asp-for="EventName" class="form-control" /><span asp-validation-for="EventName" class="text-danger"></span></div>
 <div class="mb-3"><label asp-for="Description" class="form-label"></label><textarea asp-for="Description" class="form-control" rows="3"></textarea><span asp-validation-for="Description" class="text-danger"></span></div>
 <div class="mb-3"><label asp-for="VenueId" class="form-label"></label><select asp-for="VenueId" class="form-select" asp-items="@(ViewData["VenueId"] as SelectList)"><option value="">-- Select a Venue --</option></select><span asp-validation-for="VenueId" class="text-danger"></span></div>

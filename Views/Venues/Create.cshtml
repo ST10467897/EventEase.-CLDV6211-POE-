@@ -2,7 +2,7 @@
 @{ ViewData["Title"] = "Add Venue"; }
 <h1 class="page-header"><i class="bi bi-plus-circle"></i> Add Venue</h1>
 <div class="row"><div class="col-md-8 col-lg-6"><div class="card p-4">
-<form asp-action="Create" enctype="multipart/form-data"><div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+<form asp-action="Create" enctype="multipart/form-data">@if (!ViewData.ModelState.IsValid) { <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div> }
 <div class="mb-3"><label asp-for="VenueName" class="form-label"></label><input asp-for="VenueName" class="form-control" placeholder="e.g. Grand Ballroom" /><span asp-validation-for="VenueName" class="text-danger"></span></div>
 <div class="mb-3"><label asp-for="Location" class="form-label"></label><input asp-for="Location" class="form-control" placeholder="e.g. 123 Main St, Johannesburg" /><span asp-validation-for="Location" class="text-danger"></span></div>
 <div class="mb-3"><label asp-for="Capacity" class="form-label"></label><input asp-for="Capacity" class="form-control" type="number" min="1" /><span asp-validation-for="Capacity" class="text-danger"></span></div>

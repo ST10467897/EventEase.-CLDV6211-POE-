@@ -31,6 +31,11 @@ namespace EventEaseLocal.Models
         [DataType(DataType.Time)]
         public TimeSpan EndTime { get; set; }
 
+        [Required(ErrorMessage = "Please enter the name of the person making this booking.")]
+        [StringLength(150)]
+        [Display(Name = "Booked By")]
+        public string BookedBy { get; set; } = string.Empty;
+
         [ForeignKey("EventId")]
         public Event? Event { get; set; }
 

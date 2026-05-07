@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EventEaseLocal.Models;
+using EventEaseLocal.Services;
 
 namespace EventEaseLocal.Controllers
 {
@@ -9,12 +10,12 @@ namespace EventEaseLocal.Controllers
     public class VenuesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IWebHostEnvironment _env;
+        private readonly IBlobStorageService _blobStorage;
 
-        public VenuesController(ApplicationDbContext context, IWebHostEnvironment env)
+        public VenuesController(ApplicationDbContext context, IBlobStorageService blobStorage)
         {
             _context = context;
-            _env = env;
+            _blobStorage = blobStorage;
         }
 
         public async Task<IActionResult> Index(string? searchString)
@@ -46,7 +47,7 @@ namespace EventEaseLocal.Controllers
             {
                 if (imageFile != null)
                 {
-                    var imageUrl = await SaveImage(imageFile);
+                    var imageUrl = await _blobStorage.UploadVenueImageAsync(imageFile);
                     if (imageUrl == null)
                     {
                         ModelState.AddModelError("", "Invalid image. Please upload a JPG or PNG file under 5MB.");
@@ -82,13 +83,13 @@ namespace EventEaseLocal.Controllers
                     var existing = await _context.Venues.AsNoTracking().FirstOrDefaultAsync(v => v.VenueId == id);
                     if (imageFile != null)
                     {
-                        var imageUrl = await SaveImage(imageFile);
+                        var imageUrl = await _blobStorage.UploadVenueImageAsync(imageFile);
                         if (imageUrl == null)
                         {
                             ModelState.AddModelError("", "Invalid image. Please upload a JPG or PNG file under 5MB.");
                             return View(venue);
                         }
-                        DeleteLocalImage(existing?.ImageUrl);
+                        await _blobStorage.DeleteVenueImageAsync(existing?.ImageUrl);
                         venue.ImageUrl = imageUrl;
                     }
                     else
@@ -127,37 +128,12 @@ namespace EventEaseLocal.Controllers
             var venue = await _context.Venues.FindAsync(id);
             if (venue != null)
             {
-                DeleteLocalImage(venue.ImageUrl);
+                await _blobStorage.DeleteVenueImageAsync(venue.ImageUrl);
                 _context.Venues.Remove(venue);
                 await _context.SaveChangesAsync();
                 TempData["SuccessMessage"] = $"Venue \"{venue.VenueName}\" deleted successfully.";
             }
             return RedirectToAction(nameof(Index));
-        }
-
-        private async Task<string?> SaveImage(IFormFile file)
-        {
-            var allowed = new[] { ".jpg", ".jpeg", ".png" };
-            var ext = Path.GetExtension(file.FileName).ToLowerInvariant();
-            if (!allowed.Contains(ext) || file.Length > 5 * 1024 * 1024)
-                return null;
-
-            var filename = $"{Guid.NewGuid()}{ext}";
-            var folder = Path.Combine(_env.WebRootPath, "images", "venues");
-            Directory.CreateDirectory(folder);
-            var path = Path.Combine(folder, filename);
-            using var stream = new FileStream(path, FileMode.Create);
-            await file.CopyToAsync(stream);
-            return $"/images/venues/{filename}";
-        }
-
-        private void DeleteLocalImage(string? imageUrl)
-        {
-            if (string.IsNullOrEmpty(imageUrl) || imageUrl.StartsWith("http"))
-                return;
-            var path = Path.Combine(_env.WebRootPath, imageUrl.TrimStart('/'));
-            if (System.IO.File.Exists(path))
-                System.IO.File.Delete(path);
         }
     }
 }

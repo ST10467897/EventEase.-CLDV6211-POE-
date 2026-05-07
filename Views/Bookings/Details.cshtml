@@ -5,6 +5,7 @@
 <dt class="col-sm-4">Booking ID</dt><dd class="col-sm-8">#@Model.BookingId</dd>
 <dt class="col-sm-4">Event</dt><dd class="col-sm-8"><a asp-controller="Events" asp-action="Details" asp-route-id="@Model.EventId">@Model.Event?.EventName</a></dd>
 <dt class="col-sm-4">Venue</dt><dd class="col-sm-8"><a asp-controller="Venues" asp-action="Details" asp-route-id="@Model.VenueId">@Model.Venue?.VenueName</a></dd>
+<dt class="col-sm-4">Booked By</dt><dd class="col-sm-8">@Model.BookedBy</dd>
 <dt class="col-sm-4">Date</dt><dd class="col-sm-8">@Model.EventDate.ToString("dd MMMM yyyy")</dd>
 <dt class="col-sm-4">Start Time</dt><dd class="col-sm-8">@Model.StartTime.ToString(@"hh\:mm")</dd>
 <dt class="col-sm-4">End Time</dt><dd class="col-sm-8">@Model.EndTime.ToString(@"hh\:mm")</dd>

@@ -4,10 +4,11 @@ EventEase is an ASP.NET Core MVC web application for managing venue bookings. Bu
 
 ## Features
 
-- **Venue Management** — Create, edit, and delete venues with image uploads, location, and capacity details
+- **Venue Management** — Create, edit, and delete venues with image uploads (stored in Azurite local blob storage), location, and capacity details
 - **Event Management** — Create and manage events linked to specific venues with descriptions
 - **Booking Management** — Schedule bookings with date, start time, and end time; double-booking prevention ensures no venue has overlapping bookings
-- **Search and Filtering** — Search events by name or description, filter by venue
+- **Consolidated Bookings View** — `vw_BookingDetails` SQL view joins booking, event, and venue data for the bookings list/search page
+- **Search and Filtering** — Search bookings by Booking ID or Event Name; search events by name or description; filter by venue
 - **Dashboard** — Overview of total venues, events, and bookings at a glance
 - **Authentication** — Cookie-based login for authorised booking specialists
 - **Data Integrity** — Venues and events with existing bookings cannot be deleted (Restrict delete behaviour)
@@ -24,6 +25,8 @@ EventEase is an ASP.NET Core MVC web application for managing venue bookings. Bu
 
 - [.NET 10.0 SDK](https://dotnet.microsoft.com/download)
 - SQL Server (LocalDB, Express, or Docker)
+- [Azurite](https://learn.microsoft.com/azure/storage/common/storage-use-azurite) — Azure Storage Emulator (used for local blob storage of venue images)
+- [Azure Storage Explorer](https://azure.microsoft.com/features/storage-explorer/) (optional, for verifying uploaded blobs)
 
 ## Getting Started
 
@@ -57,7 +60,21 @@ dotnet user-secrets set "AdminCredentials:Username" "admin"
 dotnet user-secrets set "AdminCredentials:Password" "your_password"
 ```
 
-### 4. Run the Application
+### 4. Start Azurite (Local Blob Storage Emulator)
+
+Venue image uploads are stored in a local `venue-images` container served by Azurite. Start it before running the app:
+
+```bash
+# install once (requires Node.js)
+npm install -g azurite
+
+# run the emulator (default ports: blob 10000, queue 10001, table 10002)
+azurite --silent --location ./azurite-data --debug ./azurite-data/debug.log
+```
+
+The application reads the connection string `UseDevelopmentStorage=true` from `appsettings.json` and creates the `venue-images` container automatically on first upload. Verify uploads in **Azure Storage Explorer** under *Local & Attached → Storage Accounts → (Emulator – Default Ports) → Blob Containers → venue-images*.
+
+### 5. Run the Application
 
 ```bash
 dotnet run
@@ -65,7 +82,7 @@ dotnet run
 
 Open the URL shown in the console output (e.g. `https://localhost:5001`).
 
-The database is created and seeded automatically on first run — no manual migration commands needed.
+The database is created and seeded automatically on first run — no manual migration commands needed. The `vw_BookingDetails` SQL view (used by the bookings list/search) is created by the `AddBookingDetailsView` migration.
 
 ## Project Structure
 

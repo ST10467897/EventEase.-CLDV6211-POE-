@@ -14,8 +14,19 @@ namespace EventEaseLocal.Controllers
 
         public async Task<IActionResult> Index(string? searchString, int? venueId, DateTime? dateFilter)
         {
-            var bookings = _context.Bookings.Include(b => b.Event).Include(b => b.Venue).AsQueryable();
-            if (!string.IsNullOrEmpty(searchString)) { bookings = bookings.Where(b => b.Event!.EventName.Contains(searchString) || b.Venue!.VenueName.Contains(searchString)); }
+            var bookings = _context.BookingDetailsView.AsQueryable();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var trimmed = searchString.Trim();
+                if (int.TryParse(trimmed.TrimStart('#'), out var bookingIdSearch))
+                {
+                    bookings = bookings.Where(b => b.BookingId == bookingIdSearch || b.EventName.Contains(trimmed));
+                }
+                else
+                {
+                    bookings = bookings.Where(b => b.EventName.Contains(trimmed));
+                }
+            }
             if (venueId.HasValue) { bookings = bookings.Where(b => b.VenueId == venueId.Value); }
             if (dateFilter.HasValue) { bookings = bookings.Where(b => b.EventDate.Date == dateFilter.Value.Date); }
             ViewData["CurrentFilter"] = searchString; ViewData["VenueFilter"] = venueId; ViewData["DateFilter"] = dateFilter?.ToString("yyyy-MM-dd");
@@ -37,7 +48,7 @@ namespace EventEaseLocal.Controllers
         }
 
         [HttpPost] [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EventId,VenueId,EventDate,StartTime,EndTime")] Booking booking)
+        public async Task<IActionResult> Create([Bind("EventId,VenueId,EventDate,StartTime,EndTime,BookedBy")] Booking booking)
         {
             if (booking.EndTime <= booking.StartTime) { ModelState.AddModelError("EndTime", "End time must be after start time."); }
             if (ModelState.IsValid)
@@ -59,7 +70,7 @@ namespace EventEaseLocal.Controllers
         }
 
         [HttpPost] [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("BookingId,EventId,VenueId,EventDate,StartTime,EndTime")] Booking booking)
+        public async Task<IActionResult> Edit(int id, [Bind("BookingId,EventId,VenueId,EventDate,StartTime,EndTime,BookedBy")] Booking booking)
         {
             if (id != booking.BookingId) return NotFound();
             if (booking.EndTime <= booking.StartTime) { ModelState.AddModelError("EndTime", "End time must be after start time."); }

@@ -155,6 +155,7 @@ footer {
     z-index: 1050;
     min-width: 300px;
 }
+.validation-summary-valid { display: none; }
 
 /* --- Forms --- */
 .form-floating > .form-control-plaintext::placeholder,

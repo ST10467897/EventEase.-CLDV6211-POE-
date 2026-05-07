@@ -4,6 +4,7 @@ using EventEaseLocal.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EventEaseLocal.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260507111740_AddBookingDetailsView")]
+    partial class AddBookingDetailsView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -29,11 +32,6 @@ namespace EventEaseLocal.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookingId"));
-
-                    b.Property<string>("BookedBy")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)");
 
                     b.Property<TimeSpan>("EndTime")
                         .HasColumnType("time");
@@ -62,7 +60,6 @@ namespace EventEaseLocal.Migrations
                         new
                         {
                             BookingId = 1,
-                            BookedBy = "Thandi Mokoena",
                             EndTime = new TimeSpan(0, 17, 0, 0, 0),
                             EventDate = new DateTime(2026, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventId = 1,
@@ -72,7 +69,6 @@ namespace EventEaseLocal.Migrations
                         new
                         {
                             BookingId = 2,
-                            BookedBy = "Sipho Dlamini",
                             EndTime = new TimeSpan(0, 23, 0, 0, 0),
                             EventDate = new DateTime(2026, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventId = 2,
@@ -82,7 +78,6 @@ namespace EventEaseLocal.Migrations
                         new
                         {
                             BookingId = 3,
-                            BookedBy = "Zephyr Corp Events Team",
                             EndTime = new TimeSpan(0, 23, 30, 0, 0),
                             EventDate = new DateTime(2026, 12, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventId = 3,
@@ -92,7 +87,6 @@ namespace EventEaseLocal.Migrations
                         new
                         {
                             BookingId = 4,
-                            BookedBy = "Sunshine Charity",
                             EndTime = new TimeSpan(0, 12, 0, 0, 0),
                             EventDate = new DateTime(2026, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventId = 4,
@@ -102,7 +96,6 @@ namespace EventEaseLocal.Migrations
                         new
                         {
                             BookingId = 5,
-                            BookedBy = "Nova Marketing",
                             EndTime = new TimeSpan(0, 15, 0, 0, 0),
                             EventDate = new DateTime(2026, 7, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventId = 5,
@@ -112,7 +105,6 @@ namespace EventEaseLocal.Migrations
                         new
                         {
                             BookingId = 6,
-                            BookedBy = "Priya Naidoo",
                             EndTime = new TimeSpan(0, 22, 0, 0, 0),
                             EventDate = new DateTime(2026, 8, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventId = 6,
@@ -122,7 +114,6 @@ namespace EventEaseLocal.Migrations
                         new
                         {
                             BookingId = 7,
-                            BookedBy = "Apex Solutions HR",
                             EndTime = new TimeSpan(0, 16, 0, 0, 0),
                             EventDate = new DateTime(2026, 9, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventId = 7,
@@ -132,7 +123,6 @@ namespace EventEaseLocal.Migrations
                         new
                         {
                             BookingId = 8,
-                            BookedBy = "Live Beats Productions",
                             EndTime = new TimeSpan(0, 22, 0, 0, 0),
                             EventDate = new DateTime(2026, 10, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventId = 8,
@@ -143,10 +133,6 @@ namespace EventEaseLocal.Migrations
 
             modelBuilder.Entity("EventEaseLocal.Models.BookingDetailsView", b =>
                 {
-                    b.Property<string>("BookedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("BookingId")
                         .HasColumnType("int");
 

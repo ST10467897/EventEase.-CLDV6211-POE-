@@ -1,13 +1,13 @@
-@model IEnumerable<Booking>
+@model IEnumerable<BookingDetailsView>
 @{ ViewData["Title"] = "Bookings"; }
 <div class="d-flex justify-content-between align-items-center mb-4"><h1 class="page-header mb-0"><i class="bi bi-bookmark-check"></i> Bookings</h1><a asp-action="Create" class="btn btn-accent"><i class="bi bi-plus-lg"></i> New Booking</a></div>
 <form asp-action="Index" method="get" class="mb-4"><div class="row g-2" style="max-width:800px;">
-<div class="col-md-3"><input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search..." /></div>
+<div class="col-md-3"><input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Booking ID or Event Name" /></div>
 <div class="col-md-3"><select name="venueId" class="form-select" asp-items="@(ViewData["Venues"] as SelectList)"><option value="">All Venues</option></select></div>
 <div class="col-md-3"><input type="date" name="dateFilter" value="@ViewData["DateFilter"]" class="form-control" /></div>
 <div class="col-md-auto"><button type="submit" class="btn btn-outline-secondary"><i class="bi bi-funnel"></i> Filter</button></div></div></form>
 @if (Model.Any()) {
-<div class="table-responsive"><table class="table table-hover"><thead><tr><th>Booking #</th><th>Event</th><th>Venue</th><th>Date</th><th>Start</th><th>End</th><th class="text-end">Actions</th></tr></thead><tbody>
-@foreach (var b in Model) { <tr><td><strong>#@b.BookingId</strong></td><td>@b.Event?.EventName</td><td><span class="badge bg-primary">@b.Venue?.VenueName</span></td><td>@b.EventDate.ToString("dd MMM yyyy")</td><td>@b.StartTime.ToString(@"hh\:mm")</td><td>@b.EndTime.ToString(@"hh\:mm")</td>
+<div class="table-responsive"><table class="table table-hover"><thead><tr><th>Booking #</th><th>Event</th><th>Venue</th><th>Booked By</th><th>Date</th><th>Start</th><th>End</th><th class="text-end">Actions</th></tr></thead><tbody>
+@foreach (var b in Model) { <tr><td><strong>#@b.BookingId</strong></td><td>@b.EventName</td><td><span class="badge bg-primary">@b.VenueName</span></td><td>@b.BookedBy</td><td>@b.EventDate.ToString("dd MMM yyyy")</td><td>@b.StartTime.ToString(@"hh\:mm")</td><td>@b.EndTime.ToString(@"hh\:mm")</td>
 <td class="text-end"><div class="btn-group btn-group-sm"><a asp-action="Details" asp-route-id="@b.BookingId" class="btn btn-outline-primary"><i class="bi bi-eye"></i></a><a asp-action="Edit" asp-route-id="@b.BookingId" class="btn btn-outline-secondary"><i class="bi bi-pencil"></i></a><a asp-action="Delete" asp-route-id="@b.BookingId" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a></div></td></tr> }
 </tbody></table></div> } else { <div class="text-center py-5 text-muted"><i class="bi bi-bookmark display-3"></i><p class="mt-2">No bookings found.</p></div> }
