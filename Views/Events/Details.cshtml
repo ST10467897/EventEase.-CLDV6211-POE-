@@ -1,0 +1,9 @@
+@model Event
+@{ ViewData["Title"] = Model.EventName; }
+<h1 class="page-header"><i class="bi bi-calendar3"></i> @Model.EventName</h1>
+<div class="row"><div class="col-md-8"><div class="card p-4"><dl class="row mb-0">
+<dt class="col-sm-4">Event ID</dt><dd class="col-sm-8">#@Model.EventId</dd>
+<dt class="col-sm-4">Description</dt><dd class="col-sm-8">@(Model.Description ?? "No description provided.")</dd>
+<dt class="col-sm-4">Venue</dt><dd class="col-sm-8"><a asp-controller="Venues" asp-action="Details" asp-route-id="@Model.VenueId">@Model.Venue?.VenueName</a></dd>
+<dt class="col-sm-4">Bookings</dt><dd class="col-sm-8">@Model.Bookings.Count total</dd>
+</dl></div><div class="mt-3 d-flex gap-2"><a asp-action="Edit" asp-route-id="@Model.EventId" class="btn btn-outline-secondary"><i class="bi bi-pencil"></i> Edit</a><a asp-action="Index" class="btn btn-outline-primary"><i class="bi bi-arrow-left"></i> Back</a></div></div></div>

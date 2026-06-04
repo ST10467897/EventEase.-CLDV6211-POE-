@@ -1,0 +1,34 @@
+@model IEnumerable<Booking>
+@{ ViewData["Title"] = "Dashboard"; }
+<h1 class="page-header"><i class="bi bi-speedometer2"></i> Dashboard</h1>
+<div class="row g-4 mb-4">
+    <div class="col-md-4"><div class="card stat-card" style="border-left-color: var(--ee-accent);">
+        <div class="d-flex justify-content-between align-items-center">
+            <div><div class="stat-label">Venues</div><div class="stat-value">@ViewData["VenueCount"]</div></div>
+            <div class="stat-icon" style="background: rgba(233,69,96,0.1); color: var(--ee-accent);"><i class="bi bi-building"></i></div>
+        </div>
+        <a asp-controller="Venues" asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">View All</a>
+    </div></div>
+    <div class="col-md-4"><div class="card stat-card" style="border-left-color: var(--ee-secondary);">
+        <div class="d-flex justify-content-between align-items-center">
+            <div><div class="stat-label">Events</div><div class="stat-value">@ViewData["EventCount"]</div></div>
+            <div class="stat-icon" style="background: rgba(22,33,62,0.1); color: var(--ee-secondary);"><i class="bi bi-calendar3"></i></div>
+        </div>
+        <a asp-controller="Events" asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">View All</a>
+    </div></div>
+    <div class="col-md-4"><div class="card stat-card" style="border-left-color: var(--ee-success);">
+        <div class="d-flex justify-content-between align-items-center">
+            <div><div class="stat-label">Bookings</div><div class="stat-value">@ViewData["BookingCount"]</div></div>
+            <div class="stat-icon" style="background: rgba(46,204,113,0.1); color: var(--ee-success);"><i class="bi bi-bookmark-check"></i></div>
+        </div>
+        <a asp-controller="Bookings" asp-action="Index" class="btn btn-outline-secondary btn-sm mt-2">View All</a>
+    </div></div>
+</div>
+<div class="card"><div class="card-header bg-white"><h5 class="mb-0"><i class="bi bi-clock-history"></i> Upcoming Bookings</h5></div>
+<div class="card-body p-0">
+@if (Model.Any()) {
+<table class="table table-hover mb-0"><thead><tr><th>Booking #</th><th>Event</th><th>Venue</th><th>Date</th><th>Time</th></tr></thead><tbody>
+@foreach (var b in Model) { <tr><td><strong>#@b.BookingId</strong></td><td>@b.Event?.EventName</td><td>@b.Venue?.VenueName</td><td>@b.EventDate.ToString("dd MMM yyyy")</td><td>@b.StartTime.ToString(@"hh\:mm") - @b.EndTime.ToString(@"hh\:mm")</td></tr> }
+</tbody></table>
+} else { <div class="text-center py-5 text-muted"><i class="bi bi-inbox display-4"></i><p class="mt-2">No upcoming bookings.</p><a asp-controller="Bookings" asp-action="Create" class="btn btn-accent"><i class="bi bi-plus-lg"></i> Create Booking</a></div> }
+</div></div>

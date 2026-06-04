@@ -1,0 +1,8 @@
+@model Booking
+@{ ViewData["Title"] = "Delete Booking"; }
+<h1 class="page-header text-danger"><i class="bi bi-trash"></i> Delete Booking</h1>
+<div class="row"><div class="col-md-8 col-lg-6"><div class="card p-4">
+<div class="alert alert-danger">Are you sure you want to permanently delete this booking?</div>
+<dl class="row mb-3"><dt class="col-sm-4">Booking ID</dt><dd class="col-sm-8">#@Model.BookingId</dd><dt class="col-sm-4">Event</dt><dd class="col-sm-8">@Model.Event?.EventName</dd><dt class="col-sm-4">Venue</dt><dd class="col-sm-8">@Model.Venue?.VenueName</dd><dt class="col-sm-4">Booked By</dt><dd class="col-sm-8">@Model.BookedBy</dd><dt class="col-sm-4">Date</dt><dd class="col-sm-8">@Model.EventDate.ToString("dd MMM yyyy")</dd><dt class="col-sm-4">Time</dt><dd class="col-sm-8">@Model.StartTime.ToString(@"hh\:mm") - @Model.EndTime.ToString(@"hh\:mm")</dd></dl>
+<div class="d-flex gap-2"><form asp-action="Delete"><input type="hidden" asp-for="BookingId" /><button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i> Confirm Delete</button></form><a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Back</a></div>
+</div></div></div>
