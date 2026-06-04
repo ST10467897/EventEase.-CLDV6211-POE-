@@ -1,12 +1,19 @@
 @model IEnumerable<Event>
 @{ ViewData["Title"] = "Events"; }
 <div class="d-flex justify-content-between align-items-center mb-4"><h1 class="page-header mb-0"><i class="bi bi-calendar3"></i> Events</h1><a asp-action="Create" class="btn btn-accent"><i class="bi bi-plus-lg"></i> Add Event</a></div>
-<form asp-action="Index" method="get" class="mb-4"><div class="row g-2" style="max-width:600px;">
-<div class="col"><input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search events..." /></div>
-<div class="col"><select name="venueId" class="form-select" asp-items="@(ViewData["Venues"] as SelectList)"><option value="">All Venues</option></select></div>
-<div class="col-auto"><button type="submit" class="btn btn-outline-secondary"><i class="bi bi-search"></i> Filter</button></div></div></form>
+<form asp-action="Index" method="get" class="mb-4"><div class="row g-2 align-items-end">
+<div class="col-12 col-md-3"><label class="form-label small text-muted mb-1">Search</label><input type="text" name="searchString" value="@ViewData["CurrentFilter"]" class="form-control" placeholder="Search events..." /></div>
+<div class="col-6 col-md-2"><label class="form-label small text-muted mb-1">Venue</label><select name="venueId" class="form-select" asp-items="@(ViewData["Venues"] as SelectList)"><option value="">All Venues</option></select></div>
+<div class="col-6 col-md-2"><label class="form-label small text-muted mb-1">Event Type</label><select name="eventTypeId" class="form-select" asp-items="@(ViewData["EventTypes"] as SelectList)"><option value="">All Types</option></select></div>
+<div class="col-6 col-md-2"><label class="form-label small text-muted mb-1">Date From</label><input type="date" name="dateFrom" value="@ViewData["DateFrom"]" class="form-control" /></div>
+<div class="col-6 col-md-2"><label class="form-label small text-muted mb-1">Date To</label><input type="date" name="dateTo" value="@ViewData["DateTo"]" class="form-control" /></div>
+<div class="col-12 col-md-1"><button type="submit" class="btn btn-outline-secondary w-100"><i class="bi bi-search"></i></button></div>
+<div class="col-12"><div class="form-check"><input class="form-check-input" type="checkbox" name="availableOnly" value="true" id="availableOnly" @(((bool?)ViewData["AvailableOnly"] ?? false) ? "checked" : "")><label class="form-check-label small" for="availableOnly">Only show events at venues that are <strong>free</strong> in the selected date range</label></div></div>
+<div class="col-12"><a asp-action="Index" class="small text-muted">Clear filters</a></div>
+</div></form>
 @if (Model.Any()) {
-<div class="table-responsive"><table class="table table-hover"><thead><tr><th>ID</th><th>Event Name</th><th>Description</th><th>Venue</th><th class="text-end">Actions</th></tr></thead><tbody>
+<div class="table-responsive"><table class="table table-hover"><thead><tr><th>ID</th><th>Event Name</th><th>Description</th><th>Venue</th><th>Type</th><th class="text-end">Actions</th></tr></thead><tbody>
 @foreach (var evt in Model) { <tr><td><strong>#@evt.EventId</strong></td><td>@evt.EventName</td><td class="text-muted">@(evt.Description?.Length > 60 ? evt.Description[..60] + "..." : evt.Description)</td><td><span class="badge bg-primary">@evt.Venue?.VenueName</span></td>
+<td>@if (evt.EventType != null) { <span class="badge bg-info text-dark">@evt.EventType.Name</span> } else { <span class="text-muted small">—</span> }</td>
 <td class="text-end"><div class="btn-group btn-group-sm"><a asp-action="Details" asp-route-id="@evt.EventId" class="btn btn-outline-primary"><i class="bi bi-eye"></i></a><a asp-action="Edit" asp-route-id="@evt.EventId" class="btn btn-outline-secondary"><i class="bi bi-pencil"></i></a><a asp-action="Delete" asp-route-id="@evt.EventId" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a></div></td></tr> }
 </tbody></table></div> } else { <div class="text-center py-5 text-muted"><i class="bi bi-calendar3 display-3"></i><p class="mt-2">No events found.</p></div> }

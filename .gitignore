@@ -4,5 +4,10 @@ obj/
 *.suo
 .vs/
 .vscode/
+.DS_Store
+azurite-data/
 appsettings.Development.json
- 
+
+# Ignore everything under poe/ except the Part 3 deliverables (report, scripts, screenshots)
+poe/*
+!poe/part3/

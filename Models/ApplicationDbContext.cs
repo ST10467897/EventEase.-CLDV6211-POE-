@@ -12,6 +12,7 @@ namespace EventEaseLocal.Models
         public DbSet<Venue> Venues { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<EventType> EventTypes { get; set; }
         public DbSet<BookingDetailsView> BookingDetailsView { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,6 +38,14 @@ namespace EventEaseLocal.Models
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
+            modelBuilder.Entity<Event>(entity =>
+            {
+                entity.HasOne(e => e.EventType)
+                      .WithMany(t => t.Events)
+                      .HasForeignKey(e => e.EventTypeId)
+                      .OnDelete(DeleteBehavior.SetNull);
+            });
+
             modelBuilder.Entity<Booking>(entity =>
             {
                 entity.HasOne(b => b.Event)
@@ -50,6 +59,17 @@ namespace EventEaseLocal.Models
                       .OnDelete(DeleteBehavior.Restrict);
             });
 
+            modelBuilder.Entity<EventType>().HasData(
+                new EventType { EventTypeId = 1, Name = "Conference" },
+                new EventType { EventTypeId = 2, Name = "Wedding" },
+                new EventType { EventTypeId = 3, Name = "Corporate" },
+                new EventType { EventTypeId = 4, Name = "Concert / Festival" },
+                new EventType { EventTypeId = 5, Name = "Birthday / Private" },
+                new EventType { EventTypeId = 6, Name = "Charity" },
+                new EventType { EventTypeId = 7, Name = "Workshop" },
+                new EventType { EventTypeId = 8, Name = "Other" }
+            );
+
             modelBuilder.Entity<Venue>().HasData(
                 new Venue { VenueId = 1, VenueName = "Grand Ballroom", Location = "123 Main Street, Johannesburg", Capacity = 500, ImageUrl = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600" },
                 new Venue { VenueId = 2, VenueName = "Skyline Terrace", Location = "45 Rivonia Road, Sandton", Capacity = 200, ImageUrl = "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=600" },
@@ -61,14 +81,14 @@ namespace EventEaseLocal.Models
             );
 
             modelBuilder.Entity<Event>().HasData(
-                new Event { EventId = 1, EventName = "Annual Tech Conference", Description = "A premier technology conference featuring industry leaders.", VenueId = 1 },
-                new Event { EventId = 2, EventName = "Wedding Reception - Mokoena", Description = "Private wedding reception for the Mokoena family.", VenueId = 2 },
-                new Event { EventId = 3, EventName = "Corporate Year-End Gala", Description = "Formal dinner and awards ceremony for Zephyr Corp employees.", VenueId = 6 },
-                new Event { EventId = 4, EventName = "Charity Fun Run Launch", Description = "Kickoff event for the annual Sunshine Charity 10K.", VenueId = 3 },
-                new Event { EventId = 5, EventName = "Product Launch - Nova Phone", Description = "Exclusive launch event for the new Nova smartphone line.", VenueId = 7 },
-                new Event { EventId = 6, EventName = "Birthday Celebration - Naidoo", Description = "50th birthday celebration for the Naidoo family.", VenueId = 4 },
-                new Event { EventId = 7, EventName = "Team Building Retreat", Description = "Two-day team building workshop for Apex Solutions.", VenueId = 5 },
-                new Event { EventId = 8, EventName = "Music Festival Day Pass", Description = "Live music performances across multiple stages.", VenueId = 1 }
+                new Event { EventId = 1, EventName = "Annual Tech Conference", Description = "A premier technology conference featuring industry leaders.", VenueId = 1, EventTypeId = 1 },
+                new Event { EventId = 2, EventName = "Wedding Reception - Mokoena", Description = "Private wedding reception for the Mokoena family.", VenueId = 2, EventTypeId = 2 },
+                new Event { EventId = 3, EventName = "Corporate Year-End Gala", Description = "Formal dinner and awards ceremony for Zephyr Corp employees.", VenueId = 6, EventTypeId = 3 },
+                new Event { EventId = 4, EventName = "Charity Fun Run Launch", Description = "Kickoff event for the annual Sunshine Charity 10K.", VenueId = 3, EventTypeId = 6 },
+                new Event { EventId = 5, EventName = "Product Launch - Nova Phone", Description = "Exclusive launch event for the new Nova smartphone line.", VenueId = 7, EventTypeId = 3 },
+                new Event { EventId = 6, EventName = "Birthday Celebration - Naidoo", Description = "50th birthday celebration for the Naidoo family.", VenueId = 4, EventTypeId = 5 },
+                new Event { EventId = 7, EventName = "Team Building Retreat", Description = "Two-day team building workshop for Apex Solutions.", VenueId = 5, EventTypeId = 7 },
+                new Event { EventId = 8, EventName = "Music Festival Day Pass", Description = "Live music performances across multiple stages.", VenueId = 1, EventTypeId = 4 }
             );
 
             modelBuilder.Entity<Booking>().HasData(

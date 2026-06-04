@@ -23,6 +23,12 @@ namespace EventEaseLocal.Models
         [ForeignKey("VenueId")]
         public Venue? Venue { get; set; }
 
+        [Display(Name = "Event Type")]
+        public int? EventTypeId { get; set; }
+
+        [ForeignKey("EventTypeId")]
+        public EventType? EventType { get; set; }
+
         public ICollection<Booking> Bookings { get; set; } = new List<Booking>();
     }
 }
